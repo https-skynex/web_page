@@ -1,1 +1,1 @@
-# web_page
+# Learning Journey Block - Mejoras en el Acordeón
