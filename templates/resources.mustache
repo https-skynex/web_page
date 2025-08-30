@@ -1,0 +1,493 @@
+{{!
+	This file is part of Moodle - http://moodle.org/
+
+	Moodle is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Moodle is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+<div class="learning-journey-block" data-courseid="{{courseid}}" data-moduleparent="{{#moduleSection}}{{moduleSection}}{{/moduleSection}}{{^moduleSection}}{{section}}{{/moduleSection}}" style="background: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">
+    <h6 class="text-center" style="color: #3c3c3c; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eaeaea;">
+        {{#modulename}}
+            {{modulename}}
+        {{/modulename}}
+        {{^modulename}}
+            {{#sectionname}}
+                {{sectionname}}
+            {{/sectionname}}
+            {{^sectionname}}
+                Recursos del curso
+            {{/sectionname}}
+        {{/modulename}}
+    </h6>
+
+    <!-- Paso a paso -->
+	<div class="container text-center py-3">
+		<div class="row align-items-center justify-content-center flex-nowrap">
+    		<!-- Paso 1: Aprende -->
+			<div class="col-auto d-flex flex-column align-items-center px-2">
+				<button id="step-learn" class="rounded-circle bg-primary text-white border-0 mb-1 step-button active"
+                style="width: 30px; height: 30px; font-size: 0.85rem; line-height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            	1
+        		</button>
+				<div style="font-size: 0.75rem; margin-top: 5px;">Aprende</div>
+                <small class="text-muted activity-count">{{learn_activities_count}}</small>
+    		</div>
+
+    		<div class="col-auto d-flex align-items-center px-1" style="min-width: 40px;">
+      			<div class="w-100 border-top border-primary" style="height: 2px;"></div>
+    		</div>
+
+    		<!-- Paso 2: Practica -->
+    		<div class="col-auto d-flex flex-column align-items-center px-2">
+				<button id="step-practice" class="rounded-circle bg-light text-dark border mb-1 step-button"
+                style="width: 30px; height: 30px; font-size: 0.85rem; line-height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+					2
+				</button>
+      			<div style="font-size: 0.75rem; margin-top: 5px;">Practica</div>
+                <small class="text-muted activity-count">{{practice_activities_count}}</small>
+    		</div>
+
+    		<div class="col-auto d-flex align-items-center px-1" style="min-width: 40px;">
+      			<div class="w-100 border-top border-secondary" style="height: 2px;"></div>
+    		</div>
+
+    		<!-- Paso 3: Demuestra -->
+    		<div class="col-auto d-flex flex-column align-items-center px-2">
+				<button id="step-demonstrate" class="rounded-circle bg-light text-dark border mb-1 step-button"
+                style="width: 30px; height: 30px; font-size: 0.85rem; line-height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+					3
+				</button>
+      			<div style="font-size: 0.75rem; margin-top: 5px;">Demuestra</div>
+                <small class="text-muted activity-count">{{demonstrate_activities_count}}</small>
+    		</div>
+  		</div>
+	</div>
+
+    <!-- Robot y recomendación -->
+	  <div class="robot-recommendation card p-1 mb-3" style="max-width: 100%; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: none; border-radius: 8px;">
+		  <div class="d-flex align-items-start bg-white p-2 rounded">
+			  <div style="flex-shrink: 0;">
+				  <img src="{{robotimage}}" alt="Robot" class="rounded" style="width: 60px; height: auto;">
+			  </div>
+			<div class="flex-grow-1 ms-2" style="min-width: 0;">
+				<p class="mb-1" style="text-align: left;">Hola <strong>{{fullname}}</strong>, te recomiendo revisar los siguientes recursos.</p>
+			</div>
+  		</div>
+	</div>
+
+    <!-- Contenedor principal de actividades -->
+    <div id="activities-container">
+        <!-- Panel de Aprende (visible por defecto) -->
+        <div id="learn-panel">
+            <!-- Acordeón para Aprende -->
+            <div id="learn-accordion">
+                <!-- Visual -->
+                <div class="card mb-2">
+                    <div class="card-header" id="learn-heading-visual">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#learn-collapse-visual" aria-expanded="false" aria-controls="learn-collapse-visual" data-accordion-id="learn-visual">
+                                Visual
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="learn-collapse-visual" class="collapse" aria-labelledby="learn-heading-visual" data-parent="#learn-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#learn_visual_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/learn_visual_activities}}
+                                {{^learn_visual_activities}}
+                                    <div class="alert alert-info m-2">No hay recursos visuales disponibles.</div>
+                                {{/learn_visual_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio -->
+                <div class="card mb-2">
+                    <div class="card-header" id="learn-heading-audio">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#learn-collapse-audio" aria-expanded="false" aria-controls="learn-collapse-audio" data-accordion-id="learn-audio">
+                                Auditivo
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="learn-collapse-audio" class="collapse" aria-labelledby="learn-heading-audio" data-parent="#learn-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#learn_audio_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/learn_audio_activities}}
+                                {{^learn_audio_activities}}
+                                    <div class="alert alert-info m-2">No hay recursos auditivos disponibles.</div>
+                                {{/learn_audio_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lectura -->
+                <div class="card mb-2">
+                    <div class="card-header" id="learn-heading-reading">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#learn-collapse-reading" aria-expanded="false" aria-controls="learn-collapse-reading" data-accordion-id="learn-reading">
+                                Lectura
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="learn-collapse-reading" class="collapse" aria-labelledby="learn-heading-reading" data-parent="#learn-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#learn_reading_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/learn_reading_activities}}
+                                {{^learn_reading_activities}}
+                                    <div class="alert alert-info m-2">No hay recursos de lectura disponibles.</div>
+                                {{/learn_reading_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Todos los recursos (al final) -->
+                <div class="card mb-2">
+                    <div class="card-header" id="learn-heading-all">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#learn-collapse-all" aria-expanded="false" aria-controls="learn-collapse-all" data-accordion-id="learn-all">
+                                Todos los recursos
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="learn-collapse-all" class="collapse" aria-labelledby="learn-heading-all" data-parent="#learn-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#learn_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/learn_activities}}
+                                {{^learn_activities}}
+                                    <div class="alert alert-info m-2">No hay recursos de aprendizaje disponibles.</div>
+                                {{/learn_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Practica (oculto por defecto) -->
+        <div id="practice-panel" style="display: none;">
+            <!-- Acordeón para Practica -->
+            <div id="practice-accordion">
+                <!-- Fácil -->
+                <div class="card mb-2">
+                    <div class="card-header" id="practice-heading-easy">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#practice-collapse-easy" aria-expanded="false" aria-controls="practice-collapse-easy" data-accordion-id="practice-easy">
+                                Fácil
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="practice-collapse-easy" class="collapse" aria-labelledby="practice-heading-easy" data-parent="#practice-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#practice_easy_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/practice_easy_activities}}
+                                {{^practice_easy_activities}}
+                                    <div class="alert alert-info m-2">No hay ejercicios fáciles disponibles.</div>
+                                {{/practice_easy_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intermedio -->
+                <div class="card mb-2">
+                    <div class="card-header" id="practice-heading-medium">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#practice-collapse-medium" aria-expanded="false" aria-controls="practice-collapse-medium" data-accordion-id="practice-medium">
+                                Intermedio
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="practice-collapse-medium" class="collapse" aria-labelledby="practice-heading-medium" data-parent="#practice-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#practice_medium_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/practice_medium_activities}}
+                                {{^practice_medium_activities}}
+                                    <div class="alert alert-info m-2">No hay ejercicios intermedios disponibles.</div>
+                                {{/practice_medium_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Difícil -->
+                <div class="card mb-2">
+                    <div class="card-header" id="practice-heading-hard">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#practice-collapse-hard" aria-expanded="false" aria-controls="practice-collapse-hard" data-accordion-id="practice-hard">
+                                Difícil
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="practice-collapse-hard" class="collapse" aria-labelledby="practice-heading-hard" data-parent="#practice-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#practice_hard_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/practice_hard_activities}}
+                                {{^practice_hard_activities}}
+                                    <div class="alert alert-info m-2">No hay ejercicios difíciles disponibles.</div>
+                                {{/practice_hard_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Todos los ejercicios (al final) -->
+                <div class="card mb-2">
+                    <div class="card-header" id="practice-heading-all">
+                        <h6 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed accordion-button" data-toggle="collapse" data-target="#practice-collapse-all" aria-expanded="false" aria-controls="practice-collapse-all" data-accordion-id="practice-all">
+                                Todos los ejercicios
+                            </button>
+                        </h6>
+                    </div>
+                    <div id="practice-collapse-all" class="collapse" aria-labelledby="practice-heading-all" data-parent="#practice-accordion">
+                        <div class="card-body p-0">
+                            <div class="list-group">
+                                {{#practice_activities}}
+                                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                                    </a>
+                                {{/practice_activities}}
+                                {{^practice_activities}}
+                                    <div class="alert alert-info m-2">No hay actividades de práctica disponibles.</div>
+                                {{/practice_activities}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Demuestra (oculto por defecto) -->
+        <div id="demonstrate-panel" style="display: none;">
+            <div class="list-group">
+                {{#demonstrate_activities}}
+                    <a href="{{{url}}}" class="list-group-item list-group-item-action" style="border: none; border-bottom: 1px solid #f1f1f1; padding: 12px 15px;">
+                        <i class="fa {{icon}}" style="margin-right: 10px; color: #4a6ea9;"></i> {{name}}
+                    </a>
+                {{/demonstrate_activities}}
+                {{^demonstrate_activities}}
+                    <div class="alert alert-info">No hay evaluaciones disponibles.</div>
+                {{/demonstrate_activities}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.learning-journey-block {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+.step-button.active {
+    background-color: #4a6ea9 !important;
+    color: white !important;
+}
+.activity-count {
+    font-size: 0.65rem;
+}
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+}
+.card-header h6 .btn {
+    color: #495057;
+    text-decoration: none;
+    font-weight: 500;
+}
+.card-header h6 .btn:hover, .card-header h6 .btn:focus {
+    color: #4a6ea9;
+    text-decoration: none;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos del DOM
+    const stepLearn = document.getElementById('step-learn');
+    const stepPractice = document.getElementById('step-practice');
+    const stepDemonstrate = document.getElementById('step-demonstrate');
+    const learnPanel = document.getElementById('learn-panel');
+    const practicePanel = document.getElementById('practice-panel');
+    const demonstratePanel = document.getElementById('demonstrate-panel');
+
+    // Obtener identificadores únicos para almacenamiento
+    const block = document.querySelector('.learning-journey-block');
+    const courseId = block.dataset.courseid;
+    const moduleParent = block.dataset.moduleparent;
+
+    // Claves de almacenamiento por módulo padre
+    const stepStorageKey = `learning_journey_active_step_${courseId}_${moduleParent}`;
+    const accordionStorageKey = `learning_journey_accordion_state_${courseId}_${moduleParent}`;
+
+    // Función para cambiar entre tipos de actividades
+    function showActivities(type) {
+        // Ocultar todos los paneles
+        learnPanel.style.display = 'none';
+        practicePanel.style.display = 'none';
+        demonstratePanel.style.display = 'none';
+
+        // Quitar la clase active de todos los botones
+        stepLearn.classList.remove('active', 'bg-primary', 'text-white');
+        stepPractice.classList.remove('active', 'bg-primary', 'text-white');
+        stepDemonstrate.classList.remove('active', 'bg-primary', 'text-white');
+
+        // Añadir clases de estilo por defecto
+        stepLearn.classList.add('bg-light', 'text-dark');
+        stepPractice.classList.add('bg-light', 'text-dark');
+        stepDemonstrate.classList.add('bg-light', 'text-dark');
+
+        // Mostrar el panel seleccionado y activar el botón correspondiente
+        if (type === 'learn') {
+            learnPanel.style.display = 'block';
+            stepLearn.classList.add('active', 'bg-primary', 'text-white');
+            stepLearn.classList.remove('bg-light', 'text-dark');
+        } else if (type === 'practice') {
+            practicePanel.style.display = 'block';
+            stepPractice.classList.add('active', 'bg-primary', 'text-white');
+            stepPractice.classList.remove('bg-light', 'text-dark');
+        } else if (type === 'demonstrate') {
+            demonstratePanel.style.display = 'block';
+            stepDemonstrate.classList.add('active', 'bg-primary', 'text-white');
+            stepDemonstrate.classList.remove('bg-light', 'text-dark');
+        }
+
+        // Guardar el estado en localStorage
+        localStorage.setItem(stepStorageKey, type);
+        
+        // Restaurar el estado del acordeón para el panel activo
+        restoreAccordionState(type);
+    }
+
+    // Función para restaurar el estado del acordeón
+    function restoreAccordionState(panelType) {
+        const savedState = localStorage.getItem(accordionStorageKey);
+        if (savedState) {
+            try {
+                const accordionState = JSON.parse(savedState);
+                const panelState = accordionState[panelType];
+                
+                if (panelState) {
+                    // Restaurar estado de cada acordeón en el panel
+                    Object.keys(panelState).forEach(accordionId => {
+                        const isOpen = panelState[accordionId];
+                        const button = document.querySelector(`[data-accordion-id="${accordionId}"]`);
+                        const collapse = document.querySelector(`#${accordionId.replace('-', '-collapse-')}`);
+                        
+                        if (button && collapse) {
+                            if (isOpen) {
+                                // Abrir el acordeón
+                                button.classList.remove('collapsed');
+                                button.setAttribute('aria-expanded', 'true');
+                                collapse.classList.add('show');
+                            } else {
+                                // Cerrar el acordeón
+                                button.classList.add('collapsed');
+                                button.setAttribute('aria-expanded', 'false');
+                                collapse.classList.remove('show');
+                            }
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing accordion state:', e);
+            }
+        }
+    }
+
+    // Función para guardar el estado del acordeón
+    function saveAccordionState() {
+        const currentStep = localStorage.getItem(stepStorageKey) || 'learn';
+        const savedState = localStorage.getItem(accordionStorageKey);
+        let accordionState = savedState ? JSON.parse(savedState) : {};
+        
+        // Obtener el estado actual de todos los acordeones del panel activo
+        const activePanel = currentStep === 'learn' ? learnPanel : 
+                           currentStep === 'practice' ? practicePanel : demonstratePanel;
+        
+        const accordionButtons = activePanel.querySelectorAll('.accordion-button');
+        const panelState = {};
+        
+        accordionButtons.forEach(button => {
+            const accordionId = button.getAttribute('data-accordion-id');
+            const isOpen = button.getAttribute('aria-expanded') === 'true';
+            panelState[accordionId] = isOpen;
+        });
+        
+        accordionState[currentStep] = panelState;
+        localStorage.setItem(accordionStorageKey, JSON.stringify(accordionState));
+    }
+
+    // Event listeners para los botones de paso
+    stepLearn.addEventListener('click', function() {
+        showActivities('learn');
+    });
+
+    stepPractice.addEventListener('click', function() {
+        showActivities('practice');
+    });
+
+    stepDemonstrate.addEventListener('click', function() {
+        showActivities('demonstrate');
+    });
+
+    // Event listeners para los botones del acordeón
+    document.querySelectorAll('.accordion-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // Guardar el estado después de un pequeño delay para que el cambio se complete
+            setTimeout(saveAccordionState, 100);
+        });
+    });
+
+    // Recuperar el estado guardado o usar 'learn' por defecto
+    const savedState = localStorage.getItem(stepStorageKey);
+    if (savedState) {
+        showActivities(savedState);
+    } else {
+        showActivities('learn');
+    }
+});
+</script>
